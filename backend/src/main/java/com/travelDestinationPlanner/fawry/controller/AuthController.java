@@ -4,6 +4,7 @@ import com.travelDestinationPlanner.fawry.dto.auth.AuthResponse;
 import com.travelDestinationPlanner.fawry.dto.auth.LoginRequest;
 import com.travelDestinationPlanner.fawry.dto.auth.RefreshRequest;
 import com.travelDestinationPlanner.fawry.dto.auth.SignUpRequest;
+import com.travelDestinationPlanner.fawry.enums.UserRole;
 import com.travelDestinationPlanner.fawry.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,15 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<AuthResponse> signUp(@Valid @RequestBody SignUpRequest request) {
+        request.setRole(UserRole.USER);
+
         return ResponseEntity.ok(authService.signUp(request));
     }
-
+    @PostMapping("admin/sign-up")
+    public ResponseEntity<AuthResponse> signUpAdmin(@Valid @RequestBody SignUpRequest request) {
+        request.setRole(UserRole.ADMIN);
+        return ResponseEntity.ok(authService.signUp(request));
+    }
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
