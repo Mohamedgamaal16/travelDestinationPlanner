@@ -9,11 +9,11 @@ import com.travelDestinationPlanner.fawry.exception.TravelDestinationPlannerApiE
 import com.travelDestinationPlanner.fawry.mapper.DestinationMapper;
 import com.travelDestinationPlanner.fawry.repository.DestinationRepository;
 import com.travelDestinationPlanner.fawry.service.AdminDestinationService;
+import com.travelDestinationPlanner.fawry.service.helper.AdminDestinationHelper;
 import feign.FeignException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,8 +38,8 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
                 return List.of();
             }
             return countries.stream()
-                    .filter(this::hasCommonName)
-                    .map(this::toSuggestionDto)
+                    .filter(AdminDestinationHelper::hasCommonName)
+                    .map(AdminDestinationHelper::toSuggestionDto)
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (FeignException e) {
             throw new TravelDestinationPlannerApiException("Failed to fetch countries: " + e.getMessage());
@@ -50,8 +50,8 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
     @Transactional
     public DestinationResponseDto addDestination(DestinationRequestDto dto) {
         Destination destination = destinationMapper.toEntity(dto);
-        applyAdminDefaults(destination, dto);
-        persistTimestamps(destination);
+        AdminDestinationHelper.applyAdminDefaults(destination, dto);
+        // AdminDestinationHelper.persistTimestamps(destination);
         Destination saved = destinationRepository.save(destination);
         return destinationMapper.toResponseDto(saved);
     }
@@ -75,83 +75,11 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
         LocalDateTime now = LocalDateTime.now();
         for (DestinationRequestDto dto : dtos) {
             Destination destination = destinationMapper.toEntity(dto);
-            applyAdminDefaults(destination, dto);
+            AdminDestinationHelper.applyAdminDefaults(destination, dto);
             destination.setCreatedAt(now);
             destination.setUpdatedAt(now);
             results.add(destinationMapper.toResponseDto(destinationRepository.save(destination)));
         }
         return results;
-    }
-
-    private void persistTimestamps(Destination destination) {
-        LocalDateTime now = LocalDateTime.now();
-        destination.setCreatedAt(now);
-        destination.setUpdatedAt(now);
-    }
-
-    private void applyAdminDefaults(Destination destination, DestinationRequestDto dto) {
-        if (dto.getApproved() != null) {
-            destination.setApproved(dto.getApproved());
-        } else {
-            destination.setApproved(Boolean.TRUE);
-        }
-    }
-
-    private boolean hasCommonName(RestCountryV3Dto country) {
-        return country.getName() != null
-                && country.getName().getCommon() != null
-                && !country.getName().getCommon().isBlank();
-    }
-
-    private DestinationResponseDto toSuggestionDto(RestCountryV3Dto country) {
-        String capital = null;
-        if (country.getCapital() != null && !country.getCapital().isEmpty()) {
-            capital = truncate(country.getCapital().get(0), 100);
-        }
-
-        String currencyLabel = null;
-        String currencySymbol = null;
-        Map<String, RestCountryV3Dto.CurrencyDto> currencies = country.getCurrencies();
-        if (currencies != null && !currencies.isEmpty()) {
-            Map.Entry<String, RestCountryV3Dto.CurrencyDto> first =
-                    currencies.entrySet().iterator().next();
-            RestCountryV3Dto.CurrencyDto info = first.getValue();
-            if (info != null && info.getName() != null) {
-                currencyLabel = truncate(info.getName(), 50);
-            } else {
-                currencyLabel = truncate(first.getKey(), 50);
-            }
-            if (info != null) {
-                currencySymbol = truncate(info.getSymbol(), 10);
-            }
-        }
-
-        String countryName = null;
-        if (country.getName() != null) {
-            countryName = truncate(country.getName().getCommon(), 100);
-        }
-
-        String flagUrl = null;
-        if (country.getFlags() != null) {
-            flagUrl = truncate(country.getFlags().getPng(), 500);
-        }
-
-        return DestinationResponseDto.builder()
-                .id(null)
-                .countryName(countryName)
-                .capital(capital)
-                .region(truncate(country.getRegion(), 100))
-                .population(country.getPopulation())
-                .currency(currencyLabel)
-                .currencySymbol(currencySymbol)
-                .flagUrl(flagUrl)
-                .build();
-    }
-
-    private static String truncate(String value, int maxLen) {
-        if (value == null) {
-            return null;
-        }
-        return value.length() <= maxLen ? value : value.substring(0, maxLen);
     }
 }
