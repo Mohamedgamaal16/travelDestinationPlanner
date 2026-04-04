@@ -17,13 +17,13 @@ public final class AdminDestinationHelper {
     //     destination.setUpdatedAt(now);
     // }
 
-    public static void applyAdminDefaults(Destination destination, DestinationRequestDto dto) {
-        if (dto.getApproved() != null) {
-            destination.setApproved(dto.getApproved());
-        } else {
-            destination.setApproved(Boolean.TRUE);
-        }
-    }
+//    public static void applyAdminDefaults(Destination destination, DestinationRequestDto dto) {
+//        if (dto.getApproved() != null) {
+//            destination.setApproved(dto.getApproved());
+//        } else {
+//            destination.setApproved(Boolean.TRUE);
+//        }
+//    }
 
     public static boolean hasCommonName(RestCountryV3Dto country) {
         return country.getName() != null

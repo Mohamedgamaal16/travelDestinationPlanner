@@ -12,5 +12,9 @@ public interface AdminDestinationService {
 
     void deleteDestination(Long id);
 
+    DestinationResponseDto approveDestination(Long id);
+
+    DestinationResponseDto disapproveDestination(Long id);
+
     List<DestinationResponseDto> bulkAdd(List<DestinationRequestDto> dtos);
 }

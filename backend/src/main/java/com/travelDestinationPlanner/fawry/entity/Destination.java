@@ -52,9 +52,9 @@ public class Destination {
     @Column(name = "flag_url", length = 500)
     private String flagUrl;
 
-    @Builder.Default
+    // @Builder.Default
     @Column(name = "approved")
-    private Boolean approved = false;
+    private Boolean approved ;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

@@ -15,15 +15,12 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(TravelDestinationPlannerApiException.class)
-    public ResponseEntity<?> handelApiException(TravelDestinationPlannerApiException ex){
-
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.SERVICE_UNAVAILABLE.value(),
-                ex.getMessage(),
-                new Date()
-        ) ;
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.SERVICE_UNAVAILABLE);
+    public ResponseEntity<?> handelApiException(TravelDestinationPlannerApiException ex) {
+        HttpStatus status =
+                ex.getHttpStatus() != null ? ex.getHttpStatus() : HttpStatus.SERVICE_UNAVAILABLE;
+        ErrorResponse errorResponse =
+                new ErrorResponse(status.value(), ex.getMessage(), new Date());
+        return new ResponseEntity<>(errorResponse, status);
     }
 
 

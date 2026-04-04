@@ -12,6 +12,7 @@ import com.travelDestinationPlanner.fawry.service.AdminDestinationService;
 import com.travelDestinationPlanner.fawry.service.helper.AdminDestinationHelper;
 import feign.FeignException;
 import java.time.LocalDateTime;
+import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
     @Transactional
     public DestinationResponseDto addDestination(DestinationRequestDto dto) {
         Destination destination = destinationMapper.toEntity(dto);
-        AdminDestinationHelper.applyAdminDefaults(destination, dto);
+//        AdminDestinationHelper.applyAdminDefaults(destination, dto);
         // AdminDestinationHelper.persistTimestamps(destination);
         Destination saved = destinationRepository.save(destination);
         return destinationMapper.toResponseDto(saved);
@@ -67,6 +68,30 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
 
     @Override
     @Transactional
+    public DestinationResponseDto approveDestination(Long id) {
+        Destination destination = destinationRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new TravelDestinationPlannerApiException("Destination not found: " + id, HttpStatus.NOT_FOUND));
+        destination.setApproved(true);
+        destination.setUpdatedAt(LocalDateTime.now());
+        return destinationMapper.toResponseDto(destinationRepository.save(destination));
+    }
+
+    @Override
+    @Transactional
+    public DestinationResponseDto disapproveDestination(Long id) {
+        Destination destination = destinationRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new TravelDestinationPlannerApiException("Destination not found: " + id, HttpStatus.NOT_FOUND));
+        destination.setApproved(false);
+        destination.setUpdatedAt(LocalDateTime.now());
+        return destinationMapper.toResponseDto(destinationRepository.save(destination));
+    }
+
+    @Override
+    @Transactional
     public List<DestinationResponseDto> bulkAdd(List<DestinationRequestDto> dtos) {
         if (dtos == null || dtos.isEmpty()) {
             return List.of();
@@ -75,7 +100,7 @@ public class AdminDestinationServiceImpl implements AdminDestinationService {
         LocalDateTime now = LocalDateTime.now();
         for (DestinationRequestDto dto : dtos) {
             Destination destination = destinationMapper.toEntity(dto);
-            AdminDestinationHelper.applyAdminDefaults(destination, dto);
+//            AdminDestinationHelper.applyAdminDefaults(destination, dto);
             destination.setCreatedAt(now);
             destination.setUpdatedAt(now);
             results.add(destinationMapper.toResponseDto(destinationRepository.save(destination)));

@@ -6,10 +6,10 @@ import com.travelDestinationPlanner.fawry.service.AdminDestinationService;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,11 +34,21 @@ public class AdminDestinationController {
         return adminDestinationService.addDestination(dto);
     }
 
+    @PatchMapping("/{id}/approve")
+    public DestinationResponseDto approveDestination(@PathVariable Long id) {
+        return adminDestinationService.approveDestination(id);
+    }
+
+    @PatchMapping("/{id}/disapprove")
+    public DestinationResponseDto disapproveDestination(@PathVariable Long id) {
+        return adminDestinationService.disapproveDestination(id);
+    }
+
     @DeleteMapping("/{id}")
-public ResponseEntity<String> deleteDestination(@PathVariable Long id) {
-    adminDestinationService.deleteDestination(id);
-    return ResponseEntity.ok("Destination deleted successfully");
-}
+    public ResponseEntity<String> deleteDestination(@PathVariable Long id) {
+        adminDestinationService.deleteDestination(id);
+        return ResponseEntity.ok("Destination deleted successfully");
+    }
 
     @PostMapping("/bulk")
     public List<DestinationResponseDto> bulkAdd(

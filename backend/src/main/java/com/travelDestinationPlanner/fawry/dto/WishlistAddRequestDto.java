@@ -12,10 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserWishlistRequestDto {
-
-    @NotNull(message = "User id is required")
-    private Long userId;
+public class WishlistAddRequestDto {
 
     @NotNull(message = "Destination id is required")
     private Long destinationId;
