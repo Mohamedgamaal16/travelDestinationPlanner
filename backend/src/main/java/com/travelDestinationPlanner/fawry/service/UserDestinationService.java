@@ -10,5 +10,5 @@ public interface UserDestinationService {
 
     DestinationResponseDto getDestinationById(Long id);
 
-    Page<DestinationResponseDto> search(String name, Pageable pageable);
+    Page<DestinationResponseDto> search(String name, Pageable pageable, Boolean approved);
 }

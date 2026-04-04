@@ -27,8 +27,10 @@ public class UserDestinationController {
 
     @GetMapping("/search")
     public Page<DestinationResponseDto> searchDestinations(
-            @RequestParam(required = false) String name, @PageableDefault(size = 20) Pageable pageable) {
-        return userDestinationService.search(name, pageable);
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Boolean approved,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return userDestinationService.search(name, pageable, approved);
     }
 
     @GetMapping("/{id}")

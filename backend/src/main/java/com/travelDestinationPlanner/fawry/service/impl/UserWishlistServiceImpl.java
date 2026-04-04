@@ -82,7 +82,7 @@ public class UserWishlistServiceImpl implements UserWishlistService {
         }
         String email = authentication.getName();
         return userRepository
-                .findFirstByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> new TravelDestinationPlannerApiException(
                         "User not found for principal: " + email, HttpStatus.NOT_FOUND));
     }

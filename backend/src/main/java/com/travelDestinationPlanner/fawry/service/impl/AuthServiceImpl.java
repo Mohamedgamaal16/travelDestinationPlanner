@@ -30,8 +30,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse signUp(SignUpRequest request) {
-        userRepository.findFirstByEmail(request.getEmail()).ifPresent(user -> {
+        userRepository.findByEmail(request.getEmail()).ifPresent(user -> {
             throw new TravelDestinationPlannerApiException("Email already exists.");
+        });
+        userRepository.findByUsername(request.getUsername()).ifPresent(user -> {
+            throw new TravelDestinationPlannerApiException("this user name already exists.");
         });
 
         User user = User.builder()

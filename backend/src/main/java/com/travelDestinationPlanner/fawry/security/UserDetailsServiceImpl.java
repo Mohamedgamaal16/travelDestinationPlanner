@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findFirstByEmail(username)
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new TravelDestinationPlannerApiException("No user found with email: " + username));
 
         String role = "ROLE_" + user.getRole().name();

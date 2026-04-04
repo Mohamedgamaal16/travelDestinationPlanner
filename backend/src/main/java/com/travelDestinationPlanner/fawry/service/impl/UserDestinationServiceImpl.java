@@ -39,12 +39,22 @@ public class UserDestinationServiceImpl implements UserDestinationService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<DestinationResponseDto> search(String name, Pageable pageable) {
+    public Page<DestinationResponseDto> search(String name, Pageable pageable, Boolean approved) {
+        boolean onlyApproved = approved == null || Boolean.TRUE.equals(approved);
         if (name == null || name.isBlank()) {
-            return getAllDestinations(pageable);
+            if (onlyApproved) {
+                return getAllDestinations(pageable);
+            }
+            return destinationRepository.findByApprovedFalse(pageable).map(destinationMapper::toResponseDto);
+        }
+        String term = name.trim();
+        if (onlyApproved) {
+            return destinationRepository
+                    .findByApprovedTrueAndCountryNameContainingIgnoreCase(term, pageable)
+                    .map(destinationMapper::toResponseDto);
         }
         return destinationRepository
-                .findByApprovedTrueAndCountryNameContainingIgnoreCase(name.trim(), pageable)
+                .findByApprovedFalseAndCountryNameContainingIgnoreCase(term, pageable)
                 .map(destinationMapper::toResponseDto);
     }
 }

@@ -12,5 +12,9 @@ public interface DestinationRepository extends JpaRepository<Destination, Long> 
 
     Page<Destination> findByApprovedTrueAndCountryNameContainingIgnoreCase(String countryName, Pageable pageable);
 
+    Page<Destination> findByApprovedFalse(Pageable pageable);
+
+    Page<Destination> findByApprovedFalseAndCountryNameContainingIgnoreCase(String countryName, Pageable pageable);
+
     Optional<Destination> findByIdAndApprovedTrue(Long id);
 }
