@@ -12,24 +12,7 @@ The implementation is located under `backend/` (package `com.travelDestinationPl
 
 ## 📊 1) Entity Relationship Diagram (ERD)
 
-The data model consists of three core entities:
 
-* **User**
-* **Destination**
-* **UserWishlist**
-
-### Relationships
-
-* A **User** can have multiple wishlist entries.
-* A **Destination** can appear in multiple users’ wishlists.
-* This creates a **many-to-many relationship** between `User` and `Destination`, implemented through the `UserWishlist` table.
-
-### Key Details
-
-* Each row in `user_wishlist` represents a single saved destination for a specific user.
-* The table also stores the timestamp (`added_at`) indicating when the destination was added.
-* There is **no separate wishlist header table**.
-* The combination `(user_id, destination_id)` is **unique**, preventing duplicate entries for the same user.
 
 ![Entity Relationship Diagram](docs/images/erd.png)
 
@@ -37,101 +20,11 @@ The data model consists of three core entities:
 
 ## 🔄 2) System Flow
 
-Incoming HTTP requests are processed through layered architecture:
+<img width="661" height="207" alt="image" src="https://github.com/user-attachments/assets/9b7a7b8e-0a47-4962-abbb-0354d3d9581f" />
 
-1. **Spring Security Layer**
-
-   * Handles authentication and authorization.
-   * `JwtRequestFilter` intercepts requests and validates JWT tokens.
-
-2. **JWT Processing**
-
-   * Extracts token from `Authorization: Bearer <accessToken>`.
-   * Validates token and loads `UserDetails`.
-   * Sets the security context.
-
-3. **Controller Layer**
-
-   * Validates incoming request data.
-   * Delegates processing to the service layer.
-
-4. **Service Layer**
-
-   * Contains business logic.
-   * Enforces application rules.
-
-5. **Repository Layer**
-
-   * Interacts with the database using JPA/Hibernate.
-
-6. **Response Handling**
-
-   * Entities are mapped to DTOs and returned as JSON.
-   * Errors are handled globally with structured responses (`status`, `message`, `timeStamp`).
-
-![System Flow](docs/images/system-flow.png)
 
 ---
 
 ## 🔐 3) Authentication Flow
 
-### 📝 Sign Up (`POST /api/sign-up`)
-
-* Input: `username`, `email`, `password`
-* Flow:
-
-  * Assigns default role: **USER**
-  * Validates uniqueness of email and username
-  * Hashes password securely
-  * Saves user to database
-  * Generates:
-
-    * Access token (JWT)
-    * Refresh token (JWT)
-* Output: `AuthResponse`
-
----
-
-### 🔑 Login (`POST /api/login`)
-
-* Input: `email`, `password`
-* Flow:
-
-  * Authenticated via `AuthenticationManager`
-  * On success, generates:
-
-    * Access token
-    * Refresh token
-* Output: `AuthResponse`
-
----
-
-### 🔄 Refresh Token (`POST /api/refresh`)
-
-* Input: `refreshToken`
-* Flow:
-
-  * Validates refresh token
-  * Issues a new **access token**
-* Output: Updated authentication response (access token)
-
----
-
-### 🔒 Accessing Protected APIs
-
-* Include header:
-
-  ```
-  Authorization: Bearer <accessToken>
-  ```
-
-* Access rules:
-
-  * `/api/user/**` → Accessible by **USER** and **ADMIN**
-  * `/api/admin/**` → Accessible by **ADMIN only**
-
----
-
-![Authentication Flow](docs/images/auth-flow.png)
-
-
+<img width="930" height="567" alt="image" src="https://github.com/user-attachments/assets/0dd5afd9-11c0-40ee-aeee-99d36eb470f0" />
