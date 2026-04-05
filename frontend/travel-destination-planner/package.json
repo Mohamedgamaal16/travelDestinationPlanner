@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:docker": "ng build --configuration production --output-mode static",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:travel-destination-planner": "node dist/travel-destination-planner/server/server.mjs"

@@ -1,3 +1,13 @@
+# Travel Destination Planner — full stack
+#
+# Services:
+#   - PostgreSQL     http://localhost:5433  (host) → 5432 in the network
+#   - Backend API    http://localhost:5050  (Swagger: /swagger-ui.html)
+#   - Frontend SPA   http://localhost:4200
+#   - Grafana (LGTM) http://localhost:3000  (includes Tempo/Loki/Prometheus; OTLP :4318)
+#
+# From repo root:  docker compose up --build
+
 name: travel-destination-planner
 
 services:
@@ -12,18 +22,58 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U service -d service"]
+      test: ["CMD-SHELL", "pg_isready -U travelDestinationPlanner -d travelDestinationPlanner"]
       interval: 5s
-      timeout: 3s
-      retries: 20
+      timeout: 5s
+      retries: 10
+    networks:
+      - tdp
 
-
+  # Grafana + OTLP collector + demo stack (backend sends telemetry here in Docker)
   grafana-lgtm:
-    image: 'grafana/otel-lgtm:latest'
+    image: grafana/otel-lgtm:latest
     ports:
-      - '3000:3000'
-      - '4317:4317'
-      - '4318:4318'
+      - "3000:3000" # Grafana UI
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    networks:
+      - tdp
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/travelDestinationPlanner
+      SPRING_DATASOURCE_USERNAME: travelDestinationPlanner
+      SPRING_DATASOURCE_PASSWORD: travelDestinationPlanner
+      MANAGEMENT_OTLP_METRICS_EXPORT_URL: http://grafana-lgtm:4318/v1/metrics
+      MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT: http://grafana-lgtm:4318/v1/traces
+      MANAGEMENT_OPENTELEMETRY_LOGGING_EXPORT_OTLP_ENDPOINT: http://grafana-lgtm:4318/v1/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      grafana-lgtm:
+        condition: service_started
+    networks:
+      - tdp
+
+  frontend:
+    build:
+      context: ./frontend/travel-destination-planner
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - tdp
+
+networks:
+  tdp:
+    driver: bridge
 
 volumes:
   postgres_data:
