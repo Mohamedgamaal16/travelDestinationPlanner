@@ -1,12 +1,61 @@
-Here’s a polished, professional version of your README content with clearer structure, consistent tone, and improved readability:
+
+# Travel Destination Planner - Setup Guide
+
+## Clone the Project
+
+```bash
+git clone https://github.com/Mohamedgamaal16/travelDestinationPlanner.git
+cd travelDestinationPlanner
+```
+
+## Run the Application with Docker
+
+1. Open **Docker Desktop** on your PC.
+2. Run the following command:
+
+```bash
+docker-compose up -d
+```
+
+3. Wait a few minutes for all required containers to download and start.
+
+## Access the Application
+
+After the containers are running, you can access the services using the following URLs:
+
+* Swagger UI:
+  http://localhost:5050/swagger-ui/index.html
+
+* Frontend Application:
+  http://localhost:4200/
+
+* Monitoring Dashboard (Grafana):
+  http://localhost:3000/?orgId=1&from=now-6h&to=now&timezone=browser
+
+## Login Credentials
+
+### Admin Login
+
+```json
+{
+  "email": "admin@traveldestinationplanner.local",
+  "password": "Admin@123456"
+}
+```
+
+### User Login
+
+```json
+{
+  "email": "user@traveldestinationplanner.local",
+  "password": "Admin@123456"
+}
+```
 
 ---
 
-# ✈️ Travel Destination Planner
+Make sure Docker is running properly before executing the command.
 
-Spring Boot backend for a travel destination planner. Users can browse destinations, manage a wishlist, and admins can curate the destination catalog.
-
-The implementation is located under `backend/` (package `com.travelDestinationPlanner.fawry`).
 
 ---
 
