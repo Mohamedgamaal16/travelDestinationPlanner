@@ -32,6 +32,9 @@ After the containers are running, you can access the services using the followin
 * Monitoring Dashboard (Grafana):
   http://localhost:3000/?orgId=1&from=now-6h&to=now&timezone=browser
 
+* postman collection:
+  https://www.postman.com/mohamed-sayed-efacc815-7247147/workspace/fawry/collection/49578324-ad528c14-bdde-45f3-a339-cca9292b8a33?action=share&source=copy-link&creator=49578324
+  
 ## Login Credentials
 
 ### Admin Login
