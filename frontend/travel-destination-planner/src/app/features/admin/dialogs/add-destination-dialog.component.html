@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Add destination</h2>
+<mat-dialog-content class="dialog-body">
+  <form [formGroup]="form">
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Country name</mat-label>
+      <input matInput formControlName="countryName" />
+      @if (form.controls.countryName.touched && form.controls.countryName.hasError('required')) {
+        <mat-error>Required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Capital</mat-label>
+      <input matInput formControlName="capital" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Region</mat-label>
+      <input matInput formControlName="region" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Population</mat-label>
+      <input matInput type="number" formControlName="population" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Currency</mat-label>
+      <input matInput formControlName="currency" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Currency symbol</mat-label>
+      <input matInput formControlName="currencySymbol" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Flag URL (https…)</mat-label>
+      <input matInput formControlName="flagUrl" />
+      @if (form.controls.flagUrl.touched && form.controls.flagUrl.hasError('pattern')) {
+        <mat-error>Must start with http:// or https://</mat-error>
+      }
+    </mat-form-field>
+    <mat-checkbox formControlName="approved">Approved</mat-checkbox>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" type="button" (click)="save()">Save</button>
+</mat-dialog-actions>

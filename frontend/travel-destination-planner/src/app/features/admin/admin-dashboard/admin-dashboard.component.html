@@ -1,0 +1,48 @@
+<div class="fawry-page-bg page">
+  <header class="hero">
+    <h1>Admin dashboard</h1>
+    <p>Manage destination catalog, approvals, and API suggestions. You can still use traveler features from the main menu.</p>
+  </header>
+
+  <div class="cards">
+    <mat-card class="fawry-card-accent dash-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="avatar teal">
+          <mat-icon>edit_location</mat-icon>
+        </div>
+        <mat-card-title>Destinations</mat-card-title>
+        <mat-card-subtitle>Approve, search, bulk import, delete</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" routerLink="/admin/destinations">Manage</a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="fawry-card-accent dash-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="avatar gold">
+          <mat-icon>lightbulb</mat-icon>
+        </div>
+        <mat-card-title>Suggestions</mat-card-title>
+        <mat-card-subtitle>Review data from the suggestions API</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <a mat-flat-button color="primary" routerLink="/admin/suggestions">View</a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="fawry-card-accent dash-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="avatar muted">
+          <mat-icon>flight</mat-icon>
+        </div>
+        <mat-card-title>Traveler view</mat-card-title>
+        <mat-card-subtitle>Same destinations & wishlist as any user</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions align="end">
+        <a mat-stroked-button color="primary" routerLink="/destinations">Destinations</a>
+        <a mat-button routerLink="/wishlist">Wishlist</a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

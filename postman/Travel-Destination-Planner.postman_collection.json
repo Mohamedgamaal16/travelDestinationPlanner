@@ -1,0 +1,303 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-travel-destination-planner",
+    "name": "Travel Destination Planner API",
+    "description": "Spring Boot API (`server.port=5050`).\n\n**Seeded users** (from `V2__destinations_default_approved_index_seed_admin.sql`):\n- **Admin:** `admin@traveldestinationplanner.local` / `Admin@123456`\n- **User:** `user@traveldestinationplanner.local` / `Admin@123456`\n\nRun **Login - Admin (seeded)** before admin requests; **Login - User (seeded)** before user/wishlist requests. Tokens are saved to collection variables.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5050" },
+    { "key": "adminAccessToken", "value": "" },
+    { "key": "adminRefreshToken", "value": "" },
+    { "key": "userAccessToken", "value": "" },
+    { "key": "userRefreshToken", "value": "" },
+    { "key": "destinationId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login - Admin (seeded)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var j = pm.response.json();",
+                  "    pm.collectionVariables.set('adminAccessToken', j.accessToken);",
+                  "    pm.collectionVariables.set('adminRefreshToken', j.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@traveldestinationplanner.local\",\n  \"password\": \"Admin@123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login",
+            "description": "Matches seeded admin: username `travel_admin`, email from V2 migration."
+          }
+        },
+        {
+          "name": "Login - User (seeded)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var j = pm.response.json();",
+                  "    pm.collectionVariables.set('userAccessToken', j.accessToken);",
+                  "    pm.collectionVariables.set('userRefreshToken', j.refreshToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@traveldestinationplanner.local\",\n  \"password\": \"Admin@123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/login",
+            "description": "Matches seeded user: username `travel_user`, email from V2 migration."
+          }
+        },
+        {
+          "name": "Sign up (new user)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"new_traveler\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"Password@123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/sign-up"
+          }
+        },
+        {
+          "name": "Admin sign-up",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"another_admin\",\n  \"email\": \"another.admin@example.com\",\n  \"password\": \"Password@123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/admin/sign-up",
+            "description": "Requires an existing ADMIN token (`/api/admin/**`)."
+          }
+        },
+        {
+          "name": "Refresh token (admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{adminRefreshToken}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/refresh"
+          }
+        },
+        {
+          "name": "Refresh token (user)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{userRefreshToken}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/refresh"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Destinations",
+      "item": [
+        {
+          "name": "Get suggestions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/destinations/suggestions"
+          }
+        },
+        {
+          "name": "Add destination",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"countryName\": \"Japan\",\n  \"capital\": \"Tokyo\",\n  \"region\": \"Asia\",\n  \"population\": 125000000,\n  \"currency\": \"Japanese yen\",\n  \"currencySymbol\": \"¥\",\n  \"flagUrl\": \"https://flagcdn.com/w320/jp.png\",\n  \"approved\": true\n}"
+            },
+            "url": "{{baseUrl}}/api/admin/destinations"
+          }
+        },
+        {
+          "name": "Bulk add destinations",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"countryName\": \"Canada\",\n    \"capital\": \"Ottawa\",\n    \"region\": \"Americas\",\n    \"population\": 38000000,\n    \"currency\": \"Canadian dollar\",\n    \"currencySymbol\": \"$\",\n    \"flagUrl\": \"https://flagcdn.com/w320/ca.png\",\n    \"approved\": false\n  }\n]"
+            },
+            "url": "{{baseUrl}}/api/admin/destinations/bulk"
+          }
+        },
+        {
+          "name": "Approve destination",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/destinations/{{destinationId}}/approve"
+          }
+        },
+        {
+          "name": "Disapprove destination",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/destinations/{{destinationId}}/disapprove"
+          }
+        },
+        {
+          "name": "Delete destination",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{adminAccessToken}}", "type": "string" }]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/destinations/{{destinationId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User - Destinations",
+      "item": [
+        {
+          "name": "List destinations (paged)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/user/destinations?page=0&size=20&sort=id,asc"
+          }
+        },
+        {
+          "name": "Search destinations",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/user/destinations/search?name=&approved=true&page=0&size=20"
+          }
+        },
+        {
+          "name": "Get destination by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/user/destinations/{{destinationId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User - Wishlist",
+      "item": [
+        {
+          "name": "Get wishlist (paged)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/user/wishlist?page=0&size=20&sort=addedAt,desc"
+          }
+        },
+        {
+          "name": "Add to wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destinationId\": {{destinationId}}\n}"
+            },
+            "url": "{{baseUrl}}/api/user/wishlist"
+          }
+        },
+        {
+          "name": "Remove from wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{userAccessToken}}", "type": "string" }]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/user/wishlist/{{destinationId}}"
+          }
+        }
+      ]
+    }
+  ]
+}

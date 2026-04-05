@@ -1,0 +1,21 @@
+.dialog-body {
+  min-width: min(100%, 320px);
+  max-width: 560px;
+  padding-top: 0.5rem;
+}
+
+.full {
+  width: 100%;
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.full-json {
+  width: 100%;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.5rem;
+}

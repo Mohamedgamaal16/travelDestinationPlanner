@@ -1,0 +1,37 @@
+<a mat-button routerLink="/destinations">
+  <mat-icon>arrow_back</mat-icon>
+  Back to list
+</a>
+
+@if (loading()) {
+  <div class="center">
+    <mat-spinner />
+  </div>
+} @else {
+  @let d = destination();
+  @if (d) {
+    <div class="detail-layout">
+      <div class="hero">
+        <img [src]="d.flagUrl" [alt]="'Flag of ' + d.countryName" />
+      </div>
+      <mat-card class="panel">
+        <mat-card-header>
+          <mat-card-title>{{ d.countryName }}</mat-card-title>
+          <mat-card-subtitle>{{ d.capital }} · {{ d.region }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-chip-set>
+            <mat-chip>Population {{ d.population | number }}</mat-chip>
+            <mat-chip>{{ d.currency }} ({{ d.currencySymbol }})</mat-chip>
+          </mat-chip-set>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-flat-button color="primary" type="button" (click)="addWishlist()">
+            <mat-icon>favorite</mat-icon>
+            Add to wishlist
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  }
+}

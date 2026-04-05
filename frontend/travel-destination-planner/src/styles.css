@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Fawry-style app chrome: deep teal bar + gold accent (brand-aligned, not official assets) */
+.fawry-app-toolbar.mat-toolbar {
+  background: linear-gradient(135deg, #003d56 0%, #006e96 48%, #0a7eb5 100%);
+  color: #fff;
+  border-bottom: 4px solid #ffd704;
+  box-shadow: 0 2px 8px rgba(0, 62, 87, 0.25);
+}
+
+.fawry-app-toolbar.mat-toolbar a,
+.fawry-app-toolbar.mat-toolbar .mat-mdc-button,
+.fawry-app-toolbar.mat-toolbar .mat-mdc-icon-button {
+  color: #fff;
+}
+
+.fawry-app-toolbar .brand {
+  color: #fff;
+}
+
+.fawry-app-toolbar .brand-mark {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 1.35rem;
+  text-transform: lowercase;
+}
+
+.fawry-app-toolbar .brand-sub {
+  font-size: 0.7rem;
+  font-weight: 500;
+  opacity: 0.92;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid #ffd704;
+}
+
+.fawry-page-bg {
+  background: linear-gradient(180deg, #e8f4f9 0%, #f5fafc 35%, var(--mat-sys-surface) 100%);
+  min-height: 100%;
+}
+
+.fawry-card-accent {
+  border-left: 4px solid #ffd704;
+}
+
+.mat-mdc-snack-bar-container.snack-success {
+  --mdc-snackbar-container-color: #2e7d32;
+  --mat-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.mat-mdc-snack-bar-container.snack-error {
+  --mdc-snackbar-container-color: #c62828;
+  --mat-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}

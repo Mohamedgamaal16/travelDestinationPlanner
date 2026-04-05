@@ -1,0 +1,43 @@
+.page-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.page-sub {
+  margin: 0 0 1rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.empty {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 2rem;
+}
+
+.table-wrap {
+  overflow: auto;
+  border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.thumb {
+  width: 48px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}

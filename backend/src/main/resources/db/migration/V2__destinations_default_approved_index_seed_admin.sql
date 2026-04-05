@@ -1,4 +1,3 @@
--- New destinations are approved by default (DB default; align app entity accordingly).
 ALTER TABLE destinations
     ALTER COLUMN approved SET DEFAULT true;
 
@@ -6,12 +5,12 @@ ALTER TABLE destinations
 -- (matches Spring Data findByApprovedTrueAndCountryNameContainingIgnoreCase)
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
-CREATE INDEX idx_destinations_approved_country_trgm
+CREATE INDEX IF NOT EXISTS idx_destinations_approved_country_trgm
     ON destinations USING gin (country_name gin_trgm_ops)
     WHERE approved = true;
 
 -- Supports listing approved destinations (pagination / sort on id)
-CREATE INDEX idx_destinations_approved_true_id
+CREATE INDEX IF NOT EXISTS idx_destinations_approved_true_id
     ON destinations (id)
     WHERE approved = true;
 
@@ -27,4 +26,17 @@ SELECT 'travel_admin',
        CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
     SELECT 1 FROM users u WHERE u.email = 'admin@traveldestinationplanner.local'
+);
+
+
+INSERT INTO users (username, password, email, role, enabled, created_at, updated_at)
+SELECT 'travel_user',
+       '$2b$10$wmbO5zaDFR2BeRFzJT8wOu1Rc8ea6ULqmpyzA6WFmK3Y8odpdgT46',
+       'user@traveldestinationplanner.local',
+       'USER',
+       true,
+       CURRENT_TIMESTAMP,
+       CURRENT_TIMESTAMP
+WHERE NOT EXISTS (
+    SELECT 1 FROM users u WHERE u.email = 'user@traveldestinationplanner.local'
 );

@@ -1,0 +1,60 @@
+.page {
+  margin: -1rem;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #003d56;
+}
+
+.hero p {
+  margin: 0 0 1.5rem;
+  max-width: 40rem;
+  color: rgba(0, 0, 0, 0.62);
+  line-height: 1.5;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.dash-card mat-card-actions {
+  padding: 0.5rem 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.avatar mat-icon {
+  margin: 0;
+  color: #fff;
+}
+
+.avatar.teal {
+  background: linear-gradient(135deg, #006e96, #0a7eb5);
+}
+
+.avatar.gold {
+  background: linear-gradient(135deg, #e6b800, #ffd704);
+}
+
+.avatar.gold mat-icon {
+  color: #003d56;
+}
+
+.avatar.muted {
+  background: linear-gradient(135deg, #4a8b75, #006e96);
+}

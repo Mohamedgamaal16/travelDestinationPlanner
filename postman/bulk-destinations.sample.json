@@ -1,0 +1,102 @@
+[
+  {
+    "countryName": "Canada",
+    "capital": "Ottawa",
+    "region": "Americas",
+    "population": 38000000,
+    "currency": "Canadian dollar",
+    "currencySymbol": "$",
+    "flagUrl": "https://flagcdn.com/w320/ca.png",
+    "approved": false
+  },
+  {
+    "countryName": "Japan",
+    "capital": "Tokyo",
+    "region": "Asia",
+    "population": 125000000,
+    "currency": "Japanese yen",
+    "currencySymbol": "¥",
+    "flagUrl": "https://flagcdn.com/w320/jp.png",
+    "approved": true
+  },
+  {
+    "countryName": "Germany",
+    "capital": "Berlin",
+    "region": "Europe",
+    "population": 83000000,
+    "currency": "Euro",
+    "currencySymbol": "€",
+    "flagUrl": "https://flagcdn.com/w320/de.png",
+    "approved": true
+  },
+  {
+    "countryName": "Brazil",
+    "capital": "Brasília",
+    "region": "Americas",
+    "population": 215000000,
+    "currency": "Brazilian real",
+    "currencySymbol": "R$",
+    "flagUrl": "https://flagcdn.com/w320/br.png",
+    "approved": false
+  },
+  {
+    "countryName": "Egypt",
+    "capital": "Cairo",
+    "region": "Africa",
+    "population": 105000000,
+    "currency": "Egyptian pound",
+    "currencySymbol": "E£",
+    "flagUrl": "https://flagcdn.com/w320/eg.png",
+    "approved": true
+  },
+  {
+    "countryName": "Australia",
+    "capital": "Canberra",
+    "region": "Oceania",
+    "population": 26000000,
+    "currency": "Australian dollar",
+    "currencySymbol": "$",
+    "flagUrl": "https://flagcdn.com/w320/au.png",
+    "approved": true
+  },
+  {
+    "countryName": "South Korea",
+    "capital": "Seoul",
+    "region": "Asia",
+    "population": 51700000,
+    "currency": "South Korean won",
+    "currencySymbol": "₩",
+    "flagUrl": "https://flagcdn.com/w320/kr.png",
+    "approved": false
+  },
+  {
+    "countryName": "Kenya",
+    "capital": "Nairobi",
+    "region": "Africa",
+    "population": 54000000,
+    "currency": "Kenyan shilling",
+    "currencySymbol": "KSh",
+    "flagUrl": "https://flagcdn.com/w320/ke.png",
+    "approved": true
+  },
+  {
+    "countryName": "New Zealand",
+    "capital": "Wellington",
+    "region": "Oceania",
+    "population": 5100000,
+    "currency": "New Zealand dollar",
+    "currencySymbol": "$",
+    "flagUrl": "https://flagcdn.com/w320/nz.png",
+    "approved": true
+  },
+  {
+    "countryName": "Portugal",
+    "capital": "Lisbon",
+    "region": "Europe",
+    "population": 10300000,
+    "currency": "Euro",
+    "currencySymbol": "€",
+    "flagUrl": "https://flagcdn.com/w320/pt.png",
+    "approved": false
+  }
+]

@@ -1,0 +1,21 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-decoration: none;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.active-link {
+  background: color-mix(in srgb, #ffd704 35%, transparent);
+  border-radius: 4px;
+}

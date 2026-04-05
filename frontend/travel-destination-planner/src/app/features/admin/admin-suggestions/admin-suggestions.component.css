@@ -1,0 +1,125 @@
+.page-title {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.page-sub {
+  margin: 0 0 1rem;
+  color: rgba(0, 0, 0, 0.6);
+  max-width: 48rem;
+  line-height: 1.45;
+}
+
+.page-sub code {
+  font-size: 0.85em;
+}
+
+.selection-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background: var(--mat-sys-surface-container-high, #e8f4f9);
+  border: 1px solid rgba(0, 110, 150, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.selection-bar .count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: #003d56;
+}
+
+.selection-bar .count mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.selection-bar .spacer {
+  flex: 1 1 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.suggestion-card {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.suggestion-card.card-selected {
+  border-color: #006e96;
+  box-shadow: 0 4px 12px rgba(0, 110, 150, 0.18);
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 1rem 0;
+}
+
+.card-main {
+  display: flex;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.flag {
+  width: 52px;
+  height: 36px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #eee;
+}
+
+.flag img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titles {
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 0.15rem;
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+.sub {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.suggestion-card mat-card-content {
+  padding-top: 0.5rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.empty {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 2rem;
+}

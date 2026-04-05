@@ -1,0 +1,39 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 56px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-decoration: none;
+  color: inherit;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.active-link {
+  background: color-mix(in srgb, #ffd704 35%, transparent);
+  border-radius: 4px;
+}
+
+mat-icon {
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}

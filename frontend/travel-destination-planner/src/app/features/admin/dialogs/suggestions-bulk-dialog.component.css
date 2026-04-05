@@ -1,0 +1,63 @@
+.dialog-intro {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.65);
+  max-width: 52rem;
+  line-height: 1.45;
+}
+
+.dialog-intro code {
+  font-size: 0.82rem;
+}
+
+.dialog-scroll {
+  max-height: min(70vh, 560px);
+  padding-top: 0.25rem;
+}
+
+.filter-field {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.table-wrap {
+  overflow: auto;
+  border-radius: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.thumb {
+  width: 40px;
+  height: 26px;
+  object-fit: cover;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.no-flag {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.pin {
+  color: #006e96;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.selection-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.54);
+}

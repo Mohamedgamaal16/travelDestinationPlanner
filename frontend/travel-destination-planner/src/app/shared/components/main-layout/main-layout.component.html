@@ -1,0 +1,52 @@
+<mat-toolbar class="fawry-app-toolbar toolbar">
+  <a [routerLink]="auth.defaultHomePath()" class="brand">
+    <span class="brand-mark">fawry</span>
+    <span class="brand-sub">Travel Planner</span>
+  </a>
+  <span class="spacer"></span>
+  @if (auth.isLoggedIn()) {
+    <a
+      mat-button
+      [routerLink]="auth.defaultHomePath()"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>dashboard</mat-icon>
+      Home
+    </a>
+    <a mat-button routerLink="/destinations" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: false }">
+      <mat-icon>public</mat-icon>
+      Destinations
+    </a>
+    <a mat-button routerLink="/wishlist" routerLinkActive="active-link">
+      <mat-icon>favorite</mat-icon>
+      Wishlist
+    </a>
+    @if (auth.isAdmin()) {
+      <button mat-button [matMenuTriggerFor]="adminMenu">
+        <mat-icon>admin_panel_settings</mat-icon>
+        Admin
+      </button>
+      <mat-menu #adminMenu="matMenu">
+        <a mat-menu-item routerLink="/admin/dashboard">
+          <mat-icon>dashboard</mat-icon>
+          Admin home
+        </a>
+        <a mat-menu-item routerLink="/admin/destinations">
+          <mat-icon>edit_location</mat-icon>
+          Manage destinations
+        </a>
+        <a mat-menu-item routerLink="/admin/suggestions">
+          <mat-icon>lightbulb</mat-icon>
+          Suggestions
+        </a>
+      </mat-menu>
+    }
+    <button mat-icon-button (click)="logout()" aria-label="Log out">
+      <mat-icon>logout</mat-icon>
+    </button>
+  }
+</mat-toolbar>
+<main class="content">
+  <router-outlet />
+</main>
